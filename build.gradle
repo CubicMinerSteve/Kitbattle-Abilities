@@ -1,0 +1,40 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id "java"
+}
+
+group = "me.cubicminer.kbabilities"
+version = "1.0"
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "spigotmc-repo"
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+    maven {
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/groups/public/"
+    }
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compileOnly "org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT"
+    compileOnly fileTree(include: ['*.jar'], dir: 'libs')
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+processResources {
+    filter ReplaceTokens, tokens: [version: version]
+}
