@@ -14,7 +14,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import me.cubicminer.kbabilities.manager.MessageManagerX;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
 import me.wazup.kitbattle.abilities.Ability;
@@ -24,23 +23,23 @@ import me.wazup.kitbattle.utils.XMaterial;
 
 public class Whirlwind extends Ability {
 
-	static int cooldown;
-	static double range;
-	static Material activationMaterial = XMaterial.FEATHER.parseMaterial();
-	static PotionEffect nauseaEffect;
+	int cooldown;
+	double range;
+	Material activationMaterial = XMaterial.FEATHER.parseMaterial();
+	PotionEffect nauseaEffect;
 
 	public String getName() {
 		return "Whirlwind";
 	}
 
 	public void load(FileConfiguration file) {
-		Whirlwind.cooldown = file.getInt("Abilities.Whirlwind.Cooldown");
-		Whirlwind.range = file.getDouble("Abilities.Whirlwind.Whirlwind-Range");
-		Whirlwind.nauseaEffect = new PotionEffect(PotionEffectType.CONFUSION, file.getInt("Abilities.Whirlwind.Nausea-Lasts-For") * 20, file.getInt("Abilities.Whirlwind.Nausea-Level") - 1);
+		this.cooldown = file.getInt("Abilities.Whirlwind.Cooldown");
+		this.range = file.getDouble("Abilities.Whirlwind.Whirlwind-Range");
+		this.nauseaEffect = new PotionEffect(PotionEffectType.CONFUSION, file.getInt("Abilities.Whirlwind.Nausea-Lasts-For") * 20, 0);
 	}
 
 	public Material getActivationMaterial() {
-		return Whirlwind.activationMaterial;
+		return this.activationMaterial;
 	}
 
 	public EntityType getActivationProjectile() {
@@ -67,23 +66,23 @@ public class Whirlwind extends Ability {
 		if (data.hasCooldown(p, "Whirlwind")) {
 			return false;
 		} 
-    	data.setCooldown(p, "Whirlwind", Whirlwind.cooldown, true);
+    	data.setCooldown(p, "Whirlwind", this.cooldown, true);
     	Kitbattle.getInstance().sendUseAbility(p, data);
 		Location[] particles = {
 			p.getLocation(), 
-			p.getLocation().clone().add(0.0D, Whirlwind.range, 0.0D), 
-			p.getLocation().clone().add(0.0D, -Whirlwind.range, 0.0D), 
-			p.getLocation().clone().add(Whirlwind.range, 0.0D, 0.0D), 
-			p.getLocation().clone().add(0.0D, 0.0D, Whirlwind.range), 
-			p.getLocation().clone().add(Whirlwind.range, 0.0D, Whirlwind.range), 
-			p.getLocation().clone().add(-Whirlwind.range, 0.0D, -Whirlwind.range), 
-			p.getLocation().clone().add(Whirlwind.range, 0.0D, -Whirlwind.range), 
-			p.getLocation().clone().add(-Whirlwind.range, 0.0D, Whirlwind.range) 
+			p.getLocation().clone().add(0.0D, this.range, 0.0D), 
+			p.getLocation().clone().add(0.0D, -this.range, 0.0D), 
+			p.getLocation().clone().add(this.range, 0.0D, 0.0D), 
+			p.getLocation().clone().add(0.0D, 0.0D, this.range), 
+			p.getLocation().clone().add(this.range, 0.0D, this.range), 
+			p.getLocation().clone().add(-this.range, 0.0D, -this.range), 
+			p.getLocation().clone().add(this.range, 0.0D, -this.range), 
+			p.getLocation().clone().add(-this.range, 0.0D, this.range) 
 		};
 		for (Location particleSpawn : particles) {
 			p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, particleSpawn, 4);
 		}
-    	for (Entity nearbyEntity : p.getNearbyEntities(Whirlwind.range, Whirlwind.range, Whirlwind.range)) {
+    	for (Entity nearbyEntity : p.getNearbyEntities(this.range, this.range, this.range)) {
       		if (!(nearbyEntity instanceof Damageable)) {
 				continue;
 			} 
@@ -99,8 +98,8 @@ public class Whirlwind extends Ability {
 				velocity.setY(velocity.getY() + 1.8);
 				velocity.setZ(velocity.getZ() + (double)(Utils.random.nextInt(100) - 50) / 100);
 				affectedPlayer.setVelocity(velocity);
-				affectedPlayer.addPotionEffect(Whirlwind.nauseaEffect);
-        		affectedPlayer.sendMessage(((String)MessageManagerX.messages.get("Whirlwind-Strike")).replace("%player%", p.getName()));
+				affectedPlayer.addPotionEffect(this.nauseaEffect);
+        		affectedPlayer.sendMessage(((String)Plugin.msgs.messages.get("Whirlwind-Strike")).replace("%player%", p.getName()));
 				affectedPlayer.playSound(p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1.0F, 1.0F);
       		} 
     	} 

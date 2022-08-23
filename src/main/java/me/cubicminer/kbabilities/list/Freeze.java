@@ -21,13 +21,12 @@ import me.wazup.kitbattle.PlayerData;
 import me.wazup.kitbattle.utils.Utils;
 import me.wazup.kitbattle.utils.XMaterial;
 import me.wazup.kitbattle.abilities.Ability;
-import me.cubicminer.kbabilities.manager.MessageManagerX;
 import me.cubicminer.kbabilities.utils.ExtendedUtils;
 
 public class Freeze extends Ability {
 
-    static int cooldown;
-    static int duration;
+    int cooldown;
+    int duration;
 
     @Override
     public String getName() {
@@ -37,7 +36,7 @@ public class Freeze extends Ability {
     @Override
     public void load(FileConfiguration file) {
         cooldown = file.getInt("Abilities.Freeze.Cooldown");
-        duration = file.getInt("Abilities.Freeze.IceCube-Last-For") * 20;
+        duration = file.getInt("Abilities.Freeze.IceCube-Lasts-For") * 20;
     }
 
     Material activationMaterial = XMaterial.ICE.parseMaterial();
@@ -136,7 +135,7 @@ public class Freeze extends Ability {
                     }, duration);   
                     return true;
                 }
-                p.sendMessage(((String)MessageManagerX.messages.get("Freeze-No-Space")));
+                p.sendMessage(((String)Plugin.msgs.messages.get("Freeze-No-Space")));
             }
             return false;  
         }

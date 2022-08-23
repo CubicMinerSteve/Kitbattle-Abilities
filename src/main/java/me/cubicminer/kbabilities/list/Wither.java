@@ -16,16 +16,16 @@ import me.wazup.kitbattle.utils.Utils;
 
 public class Wither extends Ability{
 
-	static int witherChance;
-	static PotionEffect witherEffect;
+	int witherChance;
+	PotionEffect witherEffect;
 
   	public String getName() {
 		return "Wither";
   	}
 
   	public void load(FileConfiguration file) {
-		Wither.witherChance = Integer.valueOf(file.getString("Abilities.Wither.Wither-Chance").replace("%", "")).intValue();
-		Wither.witherEffect = new PotionEffect(PotionEffectType.WITHER, file.getInt("Abilities.Wither.Wither-Lasts-For") * 20, file.getInt("Abilities.Wither.Wither-Level") - 1);
+		this.witherChance = Integer.valueOf(file.getString("Abilities.Wither.Wither-Chance").replace("%", "")).intValue();
+		this.witherEffect = new PotionEffect(PotionEffectType.WITHER, file.getInt("Abilities.Wither.Wither-Lasts-For") * 20, file.getInt("Abilities.Wither.Wither-Level") - 1);
   	}
 
   	public Material getActivationMaterial() {
@@ -54,13 +54,13 @@ public class Wither extends Ability{
 
   	public boolean execute(Player p, PlayerData data, Event event) {
 		int i = Utils.random.nextInt(100) + 1;
-		if (i <= Wither.witherChance) {
+		if (i <= this.witherChance) {
 			if (((EntityDamageByEntityEvent)event).getEntity().getType() == EntityType.PLAYER)
 			{
 				Player target = (Player)((EntityDamageByEntityEvent)event).getEntity();
 				Kitbattle.getInstance().sendUseAbility(p, data);
 				target.removePotionEffect(PotionEffectType.WITHER);
-				target.addPotionEffect(Wither.witherEffect);
+				target.addPotionEffect(this.witherEffect);
 				return true;
 			}
 		}

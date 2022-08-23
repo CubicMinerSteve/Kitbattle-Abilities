@@ -15,8 +15,8 @@ import me.wazup.kitbattle.utils.XMaterial;
 
 public class Evoker extends Ability {
 
-    static int cooldown;
-    static int radius;
+    int cooldown;
+    int radius;
  
     @Override
     public String getName() {
