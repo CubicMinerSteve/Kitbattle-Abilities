@@ -1,0 +1,15 @@
+name: KitBattleAbilities
+author: CubicMinerSteve
+version: 1.0
+api-version: 1.13
+main: me.cubicminer.kbabilities.KitBattleAbilities
+depend:
+  - KitBattle
+softdepend:
+  - Vault
+  - PlaceholderAPI
+  - TitleManager
+  - MVdWPlaceholderAPI
+  - AdvancedEnchantments
+  - HolographicDisplays
+  - CrackShot

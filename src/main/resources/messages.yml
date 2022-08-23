@@ -1,0 +1,8 @@
+# All messages supports color codes!
+# In death messages, you can add a new death detection message if you want to!
+# Here is a list of death causes https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/entity/EntityDamageEvent.DamageCause.html
+
+prefix: '&3[&bKitBattle&3] &7'
+Messages:
+  Freeze-No-Space: 'There is not enough space above the target!'
+  Whirlwind-Strike: 'Player %player% summoned a whirlwind and you are taken off from the ground!'

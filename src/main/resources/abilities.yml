@@ -1,0 +1,22 @@
+# Please do not delete any ability! only modify the available options for it
+
+Abilities:
+  Evoker:
+    Cooldown: 5
+    Radius: 3
+  Freeze:
+    Cooldown: 10
+    IceCube-Last-For: 5
+  Weakness:
+    Weakness-Chance: 100%
+    Weakness-Lasts-For: 10
+    Weakness-Level: 1
+  Whirlwind:
+    Cooldown: 10
+    Whirlwind-Range: 6
+    Nausea-Lasts-For: 15
+    Nausea-Level: 1
+  Wither:
+    Wither-Chance: 100%
+    Wither-Lasts-For: 10
+    Wither-Level: 1
