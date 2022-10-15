@@ -1,12 +1,35 @@
 # Please do not delete any ability! only modify the available options for it
 
 Abilities:
-  Evoker:
+  Berserk:
+    Cooldown: 40
+    Berserk-Lasts-For: 7
+  Blindness:
+    Cooldown: 40
+    Range: 8
+    Blindness-Lasts-For: 10
+  Conduit:
+    Regeneration-Lasts-For: 6
+    Absorption-Lasts-For: 6
+  Enchanting:
+    Cooldown: 60
+  Evocation:
     Cooldown: 5
     Radius: 3
+  Explosive:
+    Cooldown: 5
+    Explosion-Power: 4
   Freeze:
     Cooldown: 45
     IceCube-Lasts-For: 5
+  Resistance:
+    Resistance-Chance: 30%
+    Trigger-Health-Percentage: 25%
+    Resistance-Lasts-For: 2
+    Resistance-Level: 2
+  Visualization:
+    Range: 8
+    Spell-Lasts-For: 15
   Weakness:
     Weakness-Chance: 100%
     Weakness-Lasts-For: 10

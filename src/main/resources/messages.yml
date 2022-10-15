@@ -4,5 +4,12 @@
 
 prefix: '&3[&bKitBattle&3] &7'
 Messages:
-  Freeze-No-Space: 'There is not enough space above the target!'
-  Whirlwind-Strike: 'Player %player% summoned a whirlwind and you are taken off from the ground!'
+  Blindness-Activate: '&cYou are blinded by &b%player%'s &cink splash!'
+  Conduit-Effect-Apply: 'You have killed a player in the &bwater&7, so you received &abonus effects&7!'
+	Enchanting-Activate: 'Successfully randomized the enchantments on &b%player%'s &7item!'
+	Enchanting-Apply: '&cThe enchantments on your mainhand item has been randomized by &b%player%&7!'
+	Enchanting-Deny: '&cYour target player is holding nothing in mainhand!'
+	Freeze-No-Space: '&cThere is no enough space above the target!'
+	Visualization-Activate: '&cA visualization spell has been cast on you by &b%player%&c!'
+	Visualization-Deactivated: 'Spell deactivated, you are now &dinvisible &7again.'
+	Whirlwind-Strike: '&cYou are taken off from the ground by &b%player%'s &cwhirlwind!'
