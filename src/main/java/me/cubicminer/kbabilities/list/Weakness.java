@@ -19,44 +19,53 @@ public class Weakness extends Ability{
 	int weaknessChance;
 	PotionEffect weaknessEffect;
 
+	@Override
   	public String getName() {
 		return "Weakness";
   	}
 
+	@Override
   	public void load(FileConfiguration file) {
 		this.weaknessChance = Integer.valueOf(file.getString("Abilities.Weakness.Weakness-Chance").replace("%", "")).intValue();
 		this.weaknessEffect = new PotionEffect(PotionEffectType.WEAKNESS, file.getInt("Abilities.Weakness.Weakness-Lasts-For") * 20, file.getInt("Abilities.Weakness.Weakness-Level") - 1);
   	}
 
+	@Override
   	public Material getActivationMaterial() {
 		return null;
   	}
 
+	@Override
   	public EntityType getActivationProjectile() {
 		return null;
   	}
 
+	@Override
   	public boolean isAttackActivated() {
 		return false;
   	}
 
+	@Override
 	public boolean isAttackReceiveActivated() {
 		return true;
   	}
 
+	@Override
   	public boolean isDamageActivated() {
 		return false;
   	}
 
+	@Override
   	public boolean isEntityInteractionActivated() {
 		return false;
   	}
 
+	@Override
   	public boolean execute(Player p, PlayerData data, Event event) {
 		int i = Utils.random.nextInt(100) + 1;
 		if (i <= this.weaknessChance) {
 			if (((EntityDamageByEntityEvent)event).getDamager().getType() == EntityType.PLAYER) {
-				Player damager = (Player) ((EntityDamageByEntityEvent)event).getDamager();
+				Player damager = (Player)(((EntityDamageByEntityEvent)event).getDamager());
 				Kitbattle.getInstance().sendUseAbility(p, data);
 				damager.removePotionEffect(PotionEffectType.WEAKNESS);
 				damager.addPotionEffect(this.weaknessEffect);

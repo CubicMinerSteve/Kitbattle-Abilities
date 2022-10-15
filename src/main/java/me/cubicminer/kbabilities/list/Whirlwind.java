@@ -28,64 +28,73 @@ public class Whirlwind extends Ability {
 	Material activationMaterial = XMaterial.FEATHER.parseMaterial();
 	PotionEffect nauseaEffect;
 
+	@Override
 	public String getName() {
 		return "Whirlwind";
 	}
 
+	@Override
 	public void load(FileConfiguration file) {
 		this.cooldown = file.getInt("Abilities.Whirlwind.Cooldown");
 		this.range = file.getDouble("Abilities.Whirlwind.Whirlwind-Range");
 		this.nauseaEffect = new PotionEffect(PotionEffectType.CONFUSION, file.getInt("Abilities.Whirlwind.Nausea-Lasts-For") * 20, 0);
 	}
 
+	@Override
 	public Material getActivationMaterial() {
 		return this.activationMaterial;
 	}
 
+	@Override
 	public EntityType getActivationProjectile() {
 		return null;
 	}
 
+	@Override
 	public boolean isAttackActivated() {
 		return false;
 	}
 
+	@Override
 	public boolean isAttackReceiveActivated() {
 		return false;
 	}
 
+	@Override
 	public boolean isDamageActivated() {
 		return false;
 	}
 
+	@Override
 	public boolean isEntityInteractionActivated() {
 		return false;
 	}
 
+	@Override
 	public boolean execute(Player p, PlayerData data, Event event) {
 		if (data.hasCooldown(p, "Whirlwind")) {
 			return false;
-		} 
+		}
     	data.setCooldown(p, "Whirlwind", this.cooldown, true);
     	Kitbattle.getInstance().sendUseAbility(p, data);
 		Location[] particles = {
-			p.getLocation(), 
-			p.getLocation().clone().add(0.0D, this.range, 0.0D), 
-			p.getLocation().clone().add(0.0D, -this.range, 0.0D), 
-			p.getLocation().clone().add(this.range, 0.0D, 0.0D), 
-			p.getLocation().clone().add(0.0D, 0.0D, this.range), 
-			p.getLocation().clone().add(this.range, 0.0D, this.range), 
-			p.getLocation().clone().add(-this.range, 0.0D, -this.range), 
-			p.getLocation().clone().add(this.range, 0.0D, -this.range), 
-			p.getLocation().clone().add(-this.range, 0.0D, this.range) 
+			p.getLocation(),
+			p.getLocation().clone().add(0.0D, this.range, 0.0D),
+			p.getLocation().clone().add(0.0D, -this.range, 0.0D),
+			p.getLocation().clone().add(this.range, 0.0D, 0.0D),
+			p.getLocation().clone().add(0.0D, 0.0D, this.range),
+			p.getLocation().clone().add(this.range, 0.0D, this.range),
+			p.getLocation().clone().add(-this.range, 0.0D, -this.range),
+			p.getLocation().clone().add(this.range, 0.0D, -this.range),
+			p.getLocation().clone().add(-this.range, 0.0D, this.range)
 		};
 		for (Location particleSpawn : particles) {
-			p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, particleSpawn, 4);
+			p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, particleSpawn, 8);
 		}
     	for (Entity nearbyEntity : p.getNearbyEntities(this.range, this.range, this.range)) {
       		if (!(nearbyEntity instanceof Damageable)) {
 				continue;
-			} 
+			}
       		if (nearbyEntity.getType().equals(EntityType.PLAYER)) {
 				Kitbattle Plugin = Kitbattle.getInstance();
 				if (PlayerDataManager.get((Player)nearbyEntity).getKit() == null || data.getMap().isInSpawn((Player)nearbyEntity)) {
@@ -99,10 +108,10 @@ public class Whirlwind extends Ability {
 				velocity.setZ(velocity.getZ() + (double)(Utils.random.nextInt(100) - 50) / 100);
 				affectedPlayer.setVelocity(velocity);
 				affectedPlayer.addPotionEffect(this.nauseaEffect);
-        		affectedPlayer.sendMessage(((String)Plugin.msgs.messages.get("Whirlwind-Strike")).replace("%player%", p.getName()));
 				affectedPlayer.playSound(p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1.0F, 1.0F);
-      		} 
-    	} 
+        		affectedPlayer.sendMessage(((String)Plugin.msgs.messages.get("Whirlwind-Strike")).replace("%player%", p.getName()));
+      		}
+    	}
     	return true;
 	}
 
