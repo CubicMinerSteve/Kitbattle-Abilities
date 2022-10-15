@@ -1,23 +1,30 @@
 package me.cubicminer.kbabilities;
 
-import org.bukkit.event.Listener;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.cubicminer.kbabilities.manager.PluginManager;
+import me.cubicminer.kbabilities.manager.ExtendedAbilityManager;
+import me.cubicminer.kbabilities.manager.ExtendedMessageManager;
 
-public class KitBattleAbilities extends JavaPlugin implements Listener{
+public class KitBattleAbilities extends JavaPlugin{
 
-    @Override
-    public void onEnable()
-    {
-        try {
-            PluginManager.loadAbilities();
-        } catch (Exception e) {
-            PluginManager.initializeAbilities();
-            PluginManager.initializeMessages();
-            PluginManager.loadAbilities();
-        }
-        System.out.println("Successfully enabled KitBattle Abilities Plugin!");
-    }
+	@Override
+	public void onEnable()
+	{
+		try {
+			ExtendedAbilityManager.loadAbilities();
+			ExtendedMessageManager.loadMessages();
+			if (ExtendedMessageManager.hasMessageInitialized == false) {
+				Exception onLoadException = new Exception();
+				throw onLoadException;
+			}
+		} catch (Exception exception) {
+			ExtendedAbilityManager.initializeAbilities();
+			ExtendedMessageManager.initializeMessages();
+			ExtendedAbilityManager.loadAbilities();
+			ExtendedMessageManager.loadMessages();
+		}
+		Bukkit.getConsoleSender().sendMessage("[Kitbattle Abilities] Successfully enabled KitBattle Abilities Plugin!");
+	}
 
 }
