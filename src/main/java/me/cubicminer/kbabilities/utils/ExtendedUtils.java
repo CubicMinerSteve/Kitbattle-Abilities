@@ -82,7 +82,7 @@ public class ExtendedUtils {
 			if (levelID <= 6) {
 				// Thorns Enchantment I | P = 0.06
 				itemMeta.addEnchant(Enchantment.THORNS, 1, true);
-			} else if (levelID <= 6) {
+			} else if (levelID > 6 && levelID <= 9) {
 				// Thorns Enchantment II | P = 0.03
 				itemMeta.addEnchant(Enchantment.THORNS, 2, true);
 			} else {

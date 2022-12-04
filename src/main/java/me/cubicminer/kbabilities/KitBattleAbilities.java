@@ -24,7 +24,7 @@ public class KitBattleAbilities extends JavaPlugin{
 			ExtendedAbilityManager.loadAbilities();
 			ExtendedMessageManager.loadMessages();
 		}
-		Bukkit.getConsoleSender().sendMessage("[Kitbattle Abilities] Successfully enabled KitBattle Abilities Plugin!");
+		Bukkit.getConsoleSender().sendMessage("[KitbattleAbilities] Successfully enabled KitBattle Abilities Plugin!");
 	}
 
 }

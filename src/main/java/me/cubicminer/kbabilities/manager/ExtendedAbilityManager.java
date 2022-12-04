@@ -3,6 +3,7 @@ package me.cubicminer.kbabilities.manager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import me.cubicminer.kbabilities.list.Ascension;
 import me.cubicminer.kbabilities.list.Berserk;
 import me.cubicminer.kbabilities.list.Blindness;
 import me.cubicminer.kbabilities.list.Conduit;
@@ -25,6 +26,7 @@ public class ExtendedAbilityManager {
 
 	public static void loadAbilities(){
 		//To register your own abilities, you have to use the method below.
+		AbilityManager.getInstance().registerAbility(new Ascension());
 		AbilityManager.getInstance().registerAbility(new Berserk());
 		AbilityManager.getInstance().registerAbility(new Blindness());
 		AbilityManager.getInstance().registerAbility(new Conduit());
@@ -48,6 +50,10 @@ public class ExtendedAbilityManager {
 	public static void initializeAbilities() {
 		FileConfiguration fileConfiguration = Kitbattle.getInstance().fileManager.getConfig("abilities.yml");
 
+		// Set Ascension Ability Configurations.
+		fileConfiguration.set("Abilities.Ascension.Cooldown", 30);
+		fileConfiguration.set("Abilities.Ascension.Levitation-Lasts-For", 8);
+		fileConfiguration.set("Abilities.Ascension.Slow-Falling-Lasts-For", 8);
 		// Set Berserk Ability Configurations.
 		fileConfiguration.set("Abilities.Berserk.Cooldown", 45);
 		fileConfiguration.set("Abilities.Berserk.Berserk-Lasts-For", 7);

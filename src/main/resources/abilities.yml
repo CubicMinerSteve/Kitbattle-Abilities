@@ -1,6 +1,10 @@
 # Please do not delete any ability! only modify the available options for it
 
 Abilities:
+  Ascension:
+    Cooldown: 30
+    Levitation-Lasts-For: 8
+    Slow-Falling-Lasts-For: 8
   Berserk:
     Cooldown: 40
     Berserk-Lasts-For: 7
