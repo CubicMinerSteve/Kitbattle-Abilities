@@ -92,11 +92,12 @@ public class Enchanting extends Ability{
 			// Get item's metadata.
 			ItemMeta targetItemMeta = targetPlayer.getInventory().getItemInMainHand().getItemMeta();
 			// Add a new random enchantment to the given metadata.
-			targetItemMeta = ExtendedUtils.AddRandomEnch(targetItemMeta);
+			targetItemMeta = ExtendedUtils.addRandomEnch(targetItemMeta);
 			// Set the new metadata to the target item.
 			targetItems.setItemMeta(targetItemMeta);
-			// Play the enchantment sound effect.
+			// Play the enchanting sound effect.
 			p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.25F, 1.0F);
+			targetPlayer.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.25F, 1.0F);
 			// Send message to both of the players.
 			p.sendMessage((String)Plugin.msgs.messages.get("Enchanting-Activate").replace("%player%", targetPlayer.getName()));
 			targetPlayer.sendMessage((String)Plugin.msgs.messages.get("Enchanting-Apply").replace("%player%", p.getName()));

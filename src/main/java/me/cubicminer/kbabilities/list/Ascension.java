@@ -74,20 +74,18 @@ public class Ascension extends Ability{
 		{
 			return false;
 		}
-        Kitbattle Plugin = Kitbattle.getInstance();
 		data.setCooldown(p, "Ascension", cooldown, true);
 		Kitbattle.getInstance().sendUseAbility(p, data);
         p.addPotionEffect(this.levitationEffect);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin, new Runnable() {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Kitbattle.getInstance(), new Runnable() {
             public void run(){
                 p.addPotionEffect(slowfallingEffect);
             }
         }, levitateTime);
         p.playSound(p.getLocation(), Sound.ENTITY_BAT_TAKEOFF, 1.0F, 1.0F);
-        for (Entity entity : p.getNearbyEntities(10.0D, 10.0D, 10.0D)) {
-			if (!entity.getType().equals(EntityType.PLAYER))
-			  	continue; 
-			((Player)entity).playSound(entity.getLocation(), Sound.ENTITY_BAT_TAKEOFF, 1.0F, 1.0F);
+        for (Entity nearbyEntity : p.getNearbyEntities(10.0D, 10.0D, 10.0D)) {
+			if (!nearbyEntity.getType().equals(EntityType.PLAYER)) continue; 
+			((Player)nearbyEntity).playSound(p.getLocation(), Sound.ENTITY_BAT_TAKEOFF, 1.0F, 1.0F);
 		}		
 		return true;
 	}

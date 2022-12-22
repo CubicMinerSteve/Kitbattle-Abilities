@@ -52,12 +52,12 @@ public class Visualization extends Ability {
 
 	@Override
 	public boolean isAttackReceiveActivated() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isDamageActivated() {
-		return true;
+		return false;
 	}
 
 	@Override

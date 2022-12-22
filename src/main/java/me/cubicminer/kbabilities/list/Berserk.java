@@ -87,9 +87,8 @@ public class Berserk extends Ability{
 		}
 		p.playSound(p.getLocation(), Sound.ENTITY_RAVAGER_ROAR, 1.0F, 1.0F);
 		for (Entity entity : p.getNearbyEntities(10.0D, 10.0D, 10.0D)) {
-			if (!entity.getType().equals(EntityType.PLAYER))
-			  	continue; 
-			((Player)entity).playSound(entity.getLocation(), Sound.ENTITY_RAVAGER_ROAR, 1.0F, 1.0F);
+			if (!entity.getType().equals(EntityType.PLAYER)) continue; 
+			((Player)entity).playSound(p.getLocation(), Sound.ENTITY_RAVAGER_ROAR, 1.0F, 1.0F);
 		}	
 		return true;
 	}

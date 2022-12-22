@@ -31,7 +31,7 @@ public class ExtendedUtils {
 		return arrayList;
 	}
 
-	public static ItemMeta AddRandomEnch(ItemMeta pItemMeta) {
+	public static ItemMeta addRandomEnch(ItemMeta pItemMeta) {
 		ItemMeta itemMeta = pItemMeta;
 		int enchantmentID = Utils.random.nextInt(9) + 1;
 		int levelID = Utils.random.nextInt(9) + 1;

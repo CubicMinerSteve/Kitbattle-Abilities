@@ -67,6 +67,10 @@ public class Evocation extends Ability {
 		{
 			return false;
 		}
+		if (data.getMap().isInSpawn(p)) {
+			Kitbattle Plugin = Kitbattle.getInstance();
+			p.sendMessage((String)Plugin.msgs.messages.get("Use-Ability-Deny"));
+		}
 		data.setCooldown(p, "Evocation", cooldown, true);
 		Kitbattle.getInstance().sendUseAbility(p, data);
 		World world = p.getWorld();
@@ -81,7 +85,7 @@ public class Evocation extends Ability {
 			Location initialpoint = p.getLocation();
 			double yaw = (90 + p.getLocation().getYaw()) * 0.017;
 			for (int i = 1; i <= 5; i++) {
-				world.spawnEntity(initialpoint.add( 1.5 * Math.cos(yaw), 0, 1.5 * Math.sin(yaw)), EntityType.EVOKER_FANGS);
+				world.spawnEntity(initialpoint.add(1.5 * Math.cos(yaw), 0, 1.5 * Math.sin(yaw)), EntityType.EVOKER_FANGS);
 			}
 		}
 		return true;

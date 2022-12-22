@@ -69,11 +69,13 @@ public class Resistance extends Ability {
 		int i = Utils.random.nextInt(100) + 1;
 		if (i <= this.resistanceChance) {
 			if (((EntityDamageByEntityEvent)event).getDamager().getType() == EntityType.PLAYER) {
+				Player damager = (Player)(((EntityDamageByEntityEvent)event).getDamager());
 				if (p.getHealth() <= (p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()) * this.triggerPercentage / 100) {
 					Kitbattle.getInstance().sendUseAbility(p, data);
 					p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
 					p.addPotionEffect(this.resistanceEffect);
 					p.playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1.0F, 1.0F);
+					damager.playSound(p.getLocation(), Sound.ENTITY_IRON_GOLEM_REPAIR, 1.0F, 1.0F);
 					return true;
 				}
 			}

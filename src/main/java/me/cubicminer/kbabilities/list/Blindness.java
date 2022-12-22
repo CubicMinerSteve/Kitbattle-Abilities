@@ -75,6 +75,7 @@ public class Blindness extends Ability {
 		}
 		data.setCooldown(p, "Blindness", cooldown, true);
 		Kitbattle.getInstance().sendUseAbility(p, data);
+		p.playSound(p.getLocation(), Sound.ENTITY_SQUID_SQUIRT, 1.0F, 1.0F);
 		for (Entity nearbyEntity : p.getNearbyEntities(this.range, this.range, this.range)) {
 			if (!(nearbyEntity instanceof Damageable)) {
 				continue;

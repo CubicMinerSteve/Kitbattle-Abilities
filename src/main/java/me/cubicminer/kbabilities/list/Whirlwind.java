@@ -91,6 +91,7 @@ public class Whirlwind extends Ability {
 		for (Location particleSpawn : particles) {
 			p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, particleSpawn, 8);
 		}
+		p.playSound(p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1.0F, 1.0F);
     	for (Entity nearbyEntity : p.getNearbyEntities(this.range, this.range, this.range)) {
       		if (!(nearbyEntity instanceof Damageable)) {
 				continue;
