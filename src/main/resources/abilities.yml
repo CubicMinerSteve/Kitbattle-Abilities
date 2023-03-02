@@ -5,7 +5,7 @@ Abilities:
     Cooldown: 30
     Levitation-Lasts-For: 8
     Slow-Falling-Lasts-For: 8
-  Berserk:
+  Berserker:
     Cooldown: 40
     Berserk-Lasts-For: 7
   Blindness:
@@ -35,7 +35,7 @@ Abilities:
     Range: 8
     Spell-Lasts-For: 15
   Weakness:
-    Weakness-Chance: 100%
+    Weakness-Chance: 20%
     Weakness-Lasts-For: 10
     Weakness-Level: 1
   Whirlwind:
@@ -43,6 +43,6 @@ Abilities:
     Whirlwind-Range: 6
     Nausea-Lasts-For: 15
   Wither:
-    Wither-Chance: 100%
+    Wither-Chance: 20%
     Wither-Lasts-For: 10
-    Wither-Level: 1
+    Wither-Level: 2
