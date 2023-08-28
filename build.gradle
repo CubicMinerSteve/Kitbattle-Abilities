@@ -4,7 +4,7 @@ plugins {
     id "java"
 }
 
-group = "me.cubicminer.kbabilities"
+group = "code.cubicminer.kbabilities"
 version = "1.2.1"
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8

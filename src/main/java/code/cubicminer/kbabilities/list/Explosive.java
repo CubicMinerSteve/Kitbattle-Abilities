@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
 import me.wazup.kitbattle.abilities.Ability;
@@ -26,10 +26,11 @@ public class Explosive extends Ability{
     @Override
 	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Explosive Ability Settings.
-		this.cooldown = file.getInt("Abilities.Explosive.Cooldown");
-		this.explosionPower = file.getInt("Abilities.Explosive.Explosion-Power");
+		this.cooldown = file.getInt("Abilities." + getName() + ".Cooldown");
+		this.explosionPower = file.getInt("Abilities." + getName() + ".Explosion-Power");
 	}
 
 	@Override

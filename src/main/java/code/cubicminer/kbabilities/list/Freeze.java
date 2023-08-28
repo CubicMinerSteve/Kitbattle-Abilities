@@ -16,7 +16,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import code.cubicminer.kbabilities.utils.MoreUtils;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
@@ -24,6 +24,7 @@ import me.wazup.kitbattle.abilities.Ability;
 import me.wazup.kitbattle.utils.Utils;
 import me.wazup.kitbattle.utils.XMaterial;
 
+@SuppressWarnings("null")
 public class Freeze extends Ability {
 
 	int cooldown;
@@ -37,10 +38,14 @@ public class Freeze extends Ability {
 	@Override
 	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Freeze Ability Settings.
-		this.cooldown = file.getInt("Abilities.Freeze.Cooldown");
-		this.duration = file.getInt("Abilities.Freeze.IceCube-Lasts-For") * 20;
+		this.cooldown = file.getInt("Abilities." + getName() + ".Cooldown");
+		this.duration = file.getInt("Abilities." + getName() + ".IceCube-Lasts-For") * 20;
+
+		// To make the activition materital customizable. Added in version 1.2.1.
+		this.activationMaterial = XMaterial.matchXMaterial(file.getString("Abilities." + getName() + ".Activation-Material")).get().parseMaterial();
 	}
 
 	Material activationMaterial = XMaterial.ICE.parseMaterial();
@@ -139,7 +144,7 @@ public class Freeze extends Ability {
 					}, duration);
 					return true;
 				}
-				p.sendMessage(((String)kitbattlePlugin.msgs.messages.get("Freeze-No-Space")));
+				p.sendMessage(((String)kitbattlePlugin.msgs.messages.get("Abilities.Freeze-No-Space")));
 			}
 			return false;
 		}

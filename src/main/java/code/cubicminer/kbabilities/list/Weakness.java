@@ -9,7 +9,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
 import me.wazup.kitbattle.abilities.Ability;
@@ -18,6 +18,9 @@ import me.wazup.kitbattle.utils.Utils;
 public class Weakness extends Ability{
 
 	int weaknessChance;
+	int weaknessTime;
+	int weaknessLevel;
+
 	PotionEffect weaknessEffect;
 
 	@Override
@@ -28,10 +31,14 @@ public class Weakness extends Ability{
 	@Override
   	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Weakness Ability Settings.
-		this.weaknessChance = Integer.valueOf(file.getString("Abilities.Weakness.Weakness-Chance").replace("%", "")).intValue();
-		this.weaknessEffect = new PotionEffect(PotionEffectType.WEAKNESS, file.getInt("Abilities.Weakness.Weakness-Lasts-For") * 20, file.getInt("Abilities.Weakness.Weakness-Level") - 1);
+		this.weaknessChance = Integer.valueOf(file.getString("Abilities." + getName() + ".Weakness-Chance").replace("%", "")).intValue();
+		this.weaknessTime = file.getInt("Abilities." + getName() + ".Weakness-Lasts-For") * 20;
+		this.weaknessLevel = file.getInt("Abilities." + getName() + ".Weakness-Level") - 1;
+
+		this.weaknessEffect = new PotionEffect(PotionEffectType.WEAKNESS, this.weaknessTime, this.weaknessLevel);
   	}
 
 	@Override

@@ -11,7 +11,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
 import me.wazup.kitbattle.abilities.Ability;
@@ -21,6 +21,10 @@ public class Resistance extends Ability {
 
 	int resistanceChance;
 	double triggerPercentage;
+
+	int resistanceTime;
+	int resistanceLevel;
+
 	PotionEffect resistanceEffect;
 
 	@Override
@@ -31,11 +35,15 @@ public class Resistance extends Ability {
 	@Override
 	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Resistance Ability Settings.
-		this.resistanceChance = Integer.valueOf(file.getString("Abilities.Resistance.Resistance-Chance").replace("%", "")).intValue();
-		this.triggerPercentage = Integer.valueOf(file.getString("Abilities.Resistance.Trigger-Health-Percentage").replace("%", "")).intValue();
-		this.resistanceEffect = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, file.getInt("Abilities.Resistance.Resistance-Lasts-For") * 20, file.getInt("Abilities.Resistance.Resistance-Level") - 1);
+		this.resistanceChance = Integer.valueOf(file.getString("Abilities." + getName() + ".Resistance-Chance").replace("%", "")).intValue();
+		this.triggerPercentage = Integer.valueOf(file.getString("Abilities." + getName() + ".Trigger-Health-Percentage").replace("%", "")).intValue();
+		this.resistanceTime = file.getInt("Abilities." + getName() + ".Resistance-Lasts-For") * 20;
+		this.resistanceLevel = file.getInt("Abilities." + getName() + ".Resistance-Level") - 1;
+
+		this.resistanceEffect = new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, resistanceTime, resistanceLevel);
 	}
 
 	@Override

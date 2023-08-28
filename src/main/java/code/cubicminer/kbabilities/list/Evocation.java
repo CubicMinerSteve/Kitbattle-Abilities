@@ -8,12 +8,13 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
 import me.wazup.kitbattle.abilities.Ability;
 import me.wazup.kitbattle.utils.XMaterial;
 
+@SuppressWarnings("null")
 public class Evocation extends Ability {
 
 	int cooldown;
@@ -27,10 +28,14 @@ public class Evocation extends Ability {
 	@Override
 	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Evocation Ability Settings.
-		this.cooldown = file.getInt("Abilities.Evocation.Cooldown");
-		this.radius = file.getInt("Abilities.Evocation.Radius");
+		this.cooldown = file.getInt("Abilities." + getName() + ".Cooldown");
+		this.radius = file.getInt("Abilities." + getName() + ".Radius");
+
+		// To make the activition materital customizable. Added in version 1.2.1.
+		this.activationMaterial = XMaterial.matchXMaterial(file.getString("Abilities." + getName() + ".Activation-Material")).get().parseMaterial();
 	}
 
 	Material activationMaterial = XMaterial.IRON_INGOT.parseMaterial();

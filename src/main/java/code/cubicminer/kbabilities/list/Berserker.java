@@ -12,15 +12,18 @@ import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
 import me.wazup.kitbattle.abilities.Ability;
 import me.wazup.kitbattle.utils.XMaterial;
 
+@SuppressWarnings("null")
 public class Berserker extends Ability{
     
     int cooldown;
+	int berserkTime;
+
     PotionEffect strengthEffect;
     PotionEffect healthEffect;
 
@@ -32,11 +35,17 @@ public class Berserker extends Ability{
     @Override
 	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Berserker Ability Settings.
-		this.cooldown = file.getInt("Abilities.Berserker.Cooldown");
-		this.strengthEffect = new PotionEffect(PotionEffectType.INCREASE_DAMAGE, file.getInt("Abilities.Berserker.Berserk-Lasts-For") * 20, 1);
-        this.healthEffect = new PotionEffect(PotionEffectType.HEALTH_BOOST, file.getInt("Abilities.Berserker.Berserk-Lasts-For") * 20, -3);
+		this.cooldown = file.getInt("Abilities." + getName() + ".Cooldown");
+		this.berserkTime = file.getInt("Abilities." + getName() + ".Berserk-Lasts-For") * 20;
+
+		this.strengthEffect = new PotionEffect(PotionEffectType.INCREASE_DAMAGE, this.berserkTime, 1);
+        this.healthEffect = new PotionEffect(PotionEffectType.HEALTH_BOOST, this.berserkTime, -2);
+
+		// To make the activition materital customizable. Added in version 1.2.1.
+		this.activationMaterial = XMaterial.matchXMaterial(file.getString("Abilities." + getName() + ".Activation-Material")).get().parseMaterial();
 	}
 
     Material activationMaterial = XMaterial.REDSTONE_BLOCK.parseMaterial();

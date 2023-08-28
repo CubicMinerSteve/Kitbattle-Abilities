@@ -2,13 +2,16 @@
 
 Abilities:
   Ascension:
+    Activation-Material: PHANTOM_MEMBRANE
     Cooldown: 30
     Levitation-Lasts-For: 8
     Slow-Falling-Lasts-For: 8
   Berserker:
+    Activation-Material: REDSTONE_BLOCK
     Cooldown: 40
     Berserk-Lasts-For: 7
   Blindness:
+    Activation-Material: INK_SAC
     Cooldown: 40
     Range: 8
     Blindness-Lasts-For: 10
@@ -16,16 +19,19 @@ Abilities:
     Regeneration-Lasts-For: 6
     Absorption-Lasts-For: 6
   Enchanting:
+    Activation-Material: LAPIS_LAZULI
     Cooldown: 60
   Evocation:
+    Activation-Material: IRON_INGOT
     Cooldown: 5
     Radius: 3
   Explosive:
     Cooldown: 5
     Explosion-Power: 4
   Freeze:
+    Activation-Material: ICE
     Cooldown: 45
-    IceCube-Lasts-For: 5
+    IceCube-Lasts-For: 10
   Resistance:
     Resistance-Chance: 30%
     Trigger-Health-Percentage: 25%
@@ -39,6 +45,7 @@ Abilities:
     Weakness-Lasts-For: 10
     Weakness-Level: 1
   Whirlwind:
+    Activation-Material: FEATHER
     Cooldown: 45
     Whirlwind-Range: 6
     Nausea-Lasts-For: 15

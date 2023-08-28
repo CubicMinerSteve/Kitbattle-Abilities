@@ -14,7 +14,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import code.cubicminer.kbabilities.manager.Messages;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
@@ -23,12 +23,16 @@ import me.wazup.kitbattle.managers.PlayerDataManager;
 import me.wazup.kitbattle.utils.Utils;
 import me.wazup.kitbattle.utils.XMaterial;
 
+@SuppressWarnings("null")
 public class Whirlwind extends Ability {
 
 	int cooldown;
 	double range;
-	Material activationMaterial = XMaterial.FEATHER.parseMaterial();
+
+	int nauseaTime;
+
 	PotionEffect nauseaEffect;
+	
 
 	@Override
 	public String getName() {
@@ -38,12 +42,20 @@ public class Whirlwind extends Ability {
 	@Override
 	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Whirlwind Ability Settings.
-		this.cooldown = file.getInt("Abilities.Whirlwind.Cooldown");
-		this.range = file.getDouble("Abilities.Whirlwind.Whirlwind-Range");
-		this.nauseaEffect = new PotionEffect(PotionEffectType.CONFUSION, file.getInt("Abilities.Whirlwind.Nausea-Lasts-For") * 20, 0);
+		this.cooldown = file.getInt("Abilities." + getName() + ".Cooldown");
+		this.range = file.getDouble("Abilities." + getName() + ".Whirlwind-Range");
+
+		this.nauseaTime = file.getInt("Abilities." + getName() + ".Whirlwind.Nausea-Lasts-For") * 20;
+		this.nauseaEffect = new PotionEffect(PotionEffectType.CONFUSION, this.nauseaTime, 0);
+
+		// To make the activition materital customizable. Added in version 1.2.1.
+		this.activationMaterial = XMaterial.matchXMaterial(file.getString("Abilities." + getName() + ".Activation-Material")).get().parseMaterial();
 	}
+
+	Material activationMaterial = XMaterial.FEATHER.parseMaterial();
 
 	@Override
 	public Material getActivationMaterial() {
@@ -115,7 +127,7 @@ public class Whirlwind extends Ability {
 				affectedPlayer.setVelocity(velocity);
 				affectedPlayer.addPotionEffect(this.nauseaEffect);
 				affectedPlayer.playSound(p.getLocation(), Sound.ENTITY_BLAZE_SHOOT, 1.0F, 1.0F);
-				affectedPlayer.sendMessage(((String)Messages.loadedMessages.get("Whirlwind-Strike")).replace("%player%", p.getName()));
+				affectedPlayer.sendMessage(((String)Messages.loadedMsgs.get("Abilities.Whirlwind-Strike")).replace("%player%", p.getName()));
       		}
     	}
     	return true;

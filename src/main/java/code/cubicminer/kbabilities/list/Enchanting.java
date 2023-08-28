@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import code.cubicminer.kbabilities.manager.Messages;
 import code.cubicminer.kbabilities.utils.MoreUtils;
 import me.wazup.kitbattle.Kitbattle;
@@ -19,6 +19,7 @@ import me.wazup.kitbattle.PlayerData;
 import me.wazup.kitbattle.abilities.Ability;
 import me.wazup.kitbattle.utils.XMaterial;
 
+@SuppressWarnings("null")
 public class Enchanting extends Ability{
 
     int cooldown;
@@ -31,9 +32,13 @@ public class Enchanting extends Ability{
 	@Override
 	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Enchanting Ability Settings.
-		this.cooldown = file.getInt("Abilities.Enchanting.Cooldown");
+		this.cooldown = file.getInt("Abilities." + getName() + ".Cooldown");
+
+		// To make the activition materital customizable. Added in version 1.2.1.
+		this.activationMaterial = XMaterial.matchXMaterial(file.getString("Abilities." + getName() + ".Activation-Material")).get().parseMaterial();
 	}
 
 	Material activationMaterial = XMaterial.LAPIS_LAZULI.parseMaterial();
@@ -80,7 +85,7 @@ public class Enchanting extends Ability{
 			Player targetPlayer = (Player)((PlayerInteractEntityEvent)event).getRightClicked();
 			// Check if the target player is holding a valid item.
 			if (targetPlayer.getInventory().getItemInMainHand().getType() == Material.AIR) {
-				p.sendMessage((String)Messages.loadedMessages.get("Enchanting-Deny"));
+				p.sendMessage((String)Messages.loadedMsgs.get("Abilities.Enchanting-Deny"));
 				return false;
 			}
 			Kitbattle.getInstance().sendUseAbility(p, data);
@@ -103,8 +108,8 @@ public class Enchanting extends Ability{
 			p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.25F, 1.0F);
 			targetPlayer.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1.25F, 1.0F);
 			// Send message to both of the players.
-			p.sendMessage((String)Messages.loadedMessages.get("Enchanting-Activate").replace("%player%", targetPlayer.getName()));
-			targetPlayer.sendMessage((String)Messages.loadedMessages.get("Enchanting-Apply").replace("%player%", p.getName()));
+			p.sendMessage((String)Messages.loadedMsgs.get("Abilities.Enchanting-Activate").replace("%player%", targetPlayer.getName()));
+			targetPlayer.sendMessage((String)Messages.loadedMsgs.get("Abilities.Enchanting-Apply").replace("%player%", p.getName()));
 			return true;
 		}
 		return false;

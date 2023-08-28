@@ -25,11 +25,11 @@ public class Listeners implements Listener {
 	}
 
 	@EventHandler
-	public void AbilityArrowHitEvent(ProjectileHitEvent paramProjectileHitEvent) {
-		if (paramProjectileHitEvent.getEntity().getType() != EntityType.ARROW) {
+	public void AbilityArrowHitEvent(ProjectileHitEvent projectileHitEvent) {
+		if (projectileHitEvent.getEntity().getType() != EntityType.ARROW) {
 			return;
 		}
-		Arrow arrow = (Arrow)paramProjectileHitEvent.getEntity();
+		Arrow arrow = (Arrow)projectileHitEvent.getEntity();
 		if (!(arrow.getShooter() instanceof Player)) {
 			return;
 		}
@@ -40,7 +40,7 @@ public class Listeners implements Listener {
 		  		arrowShooter.sendMessage((String)this.plugin.msgs.messages.get("Ability-Use-Deny"));
 		  		return;
 			}
-			boolean bool = AbilityManager.getInstance().getAbility("Explosive").execute(arrowShooter, playerData, (Event)paramProjectileHitEvent);
+			boolean bool = AbilityManager.getInstance().getAbility("Explosive").execute(arrowShooter, playerData, (Event)projectileHitEvent);
 			if (bool) {
 		  		PlayerUseAbilityEvent playerUseAbilityEvent = new PlayerUseAbilityEvent(arrowShooter, "Explosive");
 		  		Bukkit.getPluginManager().callEvent((Event)playerUseAbilityEvent);
@@ -50,14 +50,14 @@ public class Listeners implements Listener {
 	}
 
 	@EventHandler
-	public void AbilityPlayerDeathEvent(PlayerDeathEvent paramPlayerDeathEvent) {
-		if (paramPlayerDeathEvent.getEntity().getKiller() == null) {
+	public void AbilityPlayerDeathEvent(PlayerDeathEvent playerDeathEvent) {
+		if (playerDeathEvent.getEntity().getKiller() == null) {
 			return;
 		}
-		Player playerKiller = (Player)paramPlayerDeathEvent.getEntity().getKiller();
+		Player playerKiller = (Player)playerDeathEvent.getEntity().getKiller();
 		if (AbilityManager.getInstance().hasSpecialAbility(playerKiller, "Conduit")) {
 			PlayerData playerData = PlayerDataManager.get(playerKiller);
-			boolean bool = AbilityManager.getInstance().getAbility("Conduit").execute(playerKiller, playerData, (Event)paramPlayerDeathEvent);
+			boolean bool = AbilityManager.getInstance().getAbility("Conduit").execute(playerKiller, playerData, (Event)playerDeathEvent);
 			if (bool) {
 				PlayerUseAbilityEvent playerUseAbilityEvent = new PlayerUseAbilityEvent(playerKiller, "Conduit");
 				Bukkit.getPluginManager().callEvent((Event)playerUseAbilityEvent);

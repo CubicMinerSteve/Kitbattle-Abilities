@@ -8,13 +8,16 @@ import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import code.cubicminer.kbabilities.manager.Messages;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
 import me.wazup.kitbattle.abilities.Ability;
 
 public class Conduit extends Ability{
+
+	int regenerationTime;
+	int absorptionTime;
 
     PotionEffect regenerationEffect;
     PotionEffect absorptionEffect;
@@ -27,10 +30,15 @@ public class Conduit extends Ability{
     @Override
 	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Conduit Ability Settings.
-        this.regenerationEffect = new PotionEffect(PotionEffectType.REGENERATION, file.getInt("Abilities.Conduit.Regeneration-Lasts-For") * 20, 1);
-        this.absorptionEffect = new PotionEffect(PotionEffectType.ABSORPTION, file.getInt("Abilities.Conduit.Absorption-Lasts-For") * 20, 0);
+		this.regenerationTime = file.getInt("Abilities." + getName() + ".Regeneration-Lasts-For") * 20;
+		this.absorptionTime = file.getInt("Abilities." + getName() + ".Absorption-Lasts-For") * 20;
+
+        this.regenerationEffect = new PotionEffect(PotionEffectType.REGENERATION, this.regenerationTime , 1);
+        this.absorptionEffect = new PotionEffect(PotionEffectType.ABSORPTION, this.absorptionTime, 0);
+
 	}
 
 	@Override
@@ -69,7 +77,7 @@ public class Conduit extends Ability{
             Kitbattle.getInstance().sendUseAbility(p, data);
             p.addPotionEffect(this.absorptionEffect);
             p.addPotionEffect(this.regenerationEffect);
-			p.sendMessage(Messages.loadedMessages.get("Conduit-Effect-Apply"));
+			p.sendMessage(Messages.loadedMsgs.get("Abilities.Conduit-Effect-Apply"));
         }
 		return true;
 	}

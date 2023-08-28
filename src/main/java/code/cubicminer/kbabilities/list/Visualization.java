@@ -14,7 +14,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import code.cubicminer.kbabilities.manager.Configurations;
+import code.cubicminer.kbabilities.manager.FileReader;
 import code.cubicminer.kbabilities.manager.Messages;
 import me.wazup.kitbattle.Kitbattle;
 import me.wazup.kitbattle.PlayerData;
@@ -34,10 +34,11 @@ public class Visualization extends Ability {
 	@Override
 	public void load(FileConfiguration file) {
 		// To avoid unexpected data corruption and for future plugin compatibility. Added in version 1.2.0.
-		file = Configurations.getConfigurationFile("abilities.yml");
+		file = FileReader.getConfigurationFile("abilities.yml");
+
 		// The Followings are Visualization Ability Settings.
-		this.range = file.getInt("Abilities.Visualization.Range");
-		this.duration = file.getInt("Abilities.Visualization.Spell-Lasts-For") * 20;
+		this.range = file.getInt("Abilities." + getName() + ".Range");
+		this.duration = file.getInt("Abilities."  + getName() + ".Spell-Lasts-For") * 20;
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class Visualization extends Ability {
                         playerKitName.put(playertoRemoveEffectWith.getName(), playerData.getKit().getName());
                         playertoRemoveEffectWith.removePotionEffect(potionEffect.getType());
 						playertoRemoveEffectWith.playSound(playertoRemoveEffectWith.getLocation(), Sound.ENTITY_ILLUSIONER_CAST_SPELL, 1.0F, 1.0F);
-						playertoRemoveEffectWith.sendMessage((String)Messages.loadedMessages.get("Visualization-Activate").replace("%player%", p.getName()));
+						playertoRemoveEffectWith.sendMessage((String)Messages.loadedMsgs.get("Abilities.Visualization-Activate").replace("%player%", p.getName()));
                     }
                 }
             }
@@ -118,7 +119,7 @@ public class Visualization extends Ability {
 						}
 						playerToApplyEffectOn.addPotionEffect(playerPotionEffect.get(playerName));
 						playerToApplyEffectOn.playSound(playerToApplyEffectOn.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1.0F, 1.0F);
-						playerToApplyEffectOn.sendMessage((String)Messages.loadedMessages.get("Visualization-Deactivate"));
+						playerToApplyEffectOn.sendMessage((String)Messages.loadedMsgs.get("Abilities.Visualization-Deactivate"));
 				  	}
 				}
 			}).runTaskLater(Plugin, this.duration);
